@@ -7,7 +7,12 @@ export class CategoryService {
 
   constructor(private db: AngularFireDatabase) { }
 
-  getCategories() {
-    return this.db.list('/categories', ref => ref.orderByChild('name')).valueChanges();
+  getAll() {
+    return this.db.list('/categories', ref => ref.orderByChild('name')).snapshotChanges().map(actions => {
+      return actions.map(a => {
+        const key = a.payload.key;
+        return { key: key, ...a.payload.val() };
+      });
+    });
   }
 }
