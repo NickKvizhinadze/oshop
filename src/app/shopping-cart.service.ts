@@ -15,16 +15,11 @@ export class ShoppingCartService {
   }
 
   async addToCart(product: Product) {
-    const cartId = await this.getOrCreateCartId();
-    const item$ = this.getItem(cartId, product.key);
-    item$.snapshotChanges().take(1)
-      .map(action => {
-        const exists = action.payload.exists();
-        return { exists: exists, ...action.payload.val() };
-      })
-      .subscribe(item => {
-        item$.update({ product: product, quantity: (item.quantity || 0) + 1 });
-      });
+    this.updateItemQuantity(product, 1);
+  }
+
+  async removeFromCart(product: Product) {
+    this.updateItemQuantity(product, -1);
   }
 
   private create() {
@@ -47,6 +42,19 @@ export class ShoppingCartService {
     const result = await this.create();
     localStorage.setItem('cartId', result.key);
     return result.key;
+  }
+
+  private async updateItemQuantity(product: Product, change: number) {
+    const cartId = await this.getOrCreateCartId();
+    const item$ = this.getItem(cartId, product.key);
+    item$.snapshotChanges().take(1)
+      .map(action => {
+        const exists = action.payload.exists();
+        return { exists: exists, ...action.payload.val() };
+      })
+      .subscribe(item => {
+        item$.update({ product: product, quantity: (item.quantity || 0) + change });
+      });
   }
 
 
