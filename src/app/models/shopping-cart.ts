@@ -1,8 +1,15 @@
 import { ShoppingCartItem } from './shopping-cart-item';
 
 export class ShoppingCart {
-    constructor(public items: ShoppingCartItem[]) {
+    constructor(public items: { [productId: string]: ShoppingCartItem }) {
+        for (const productId in items) {
+            if (items.hasOwnProperty(productId)) {
+                this.itemsList.push(items[productId]);
+            }
+        }
     }
+
+    itemsList: ShoppingCartItem[] = [];
 
     get totalItems() {
         let count = 0;
