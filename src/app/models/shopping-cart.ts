@@ -13,4 +13,8 @@ export class ShoppingCart {
         }
         return count;
     }
+
+    get productIds() {
+        return Object.keys(this.items);
+    }
 }
