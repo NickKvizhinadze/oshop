@@ -7,15 +7,22 @@
       <tr>
         <th>Product</th>
         <th>Quantity</th>
-        <th></th>
+        <th>Price</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of cart.itemsList">
         <td>{{ item.product.title }}</td>
         <td>{{ item.quantity }}</td>
-        <td></td>
+        <td>{{ item.totalPrice | currency: "USD" : symbol }}</td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>{{ cart.totalPrice | currency: "USD" : symbol }}</td>
+      </tr>
+    </tfoot>
   </table>
 </ng-container>

@@ -4,7 +4,8 @@ export class ShoppingCart {
     constructor(public items: { [productId: string]: ShoppingCartItem }) {
         for (const productId in items) {
             if (items.hasOwnProperty(productId)) {
-                this.itemsList.push(items[productId]);
+                const item = items[productId];
+                this.itemsList.push(new ShoppingCartItem(item.product, item.quantity));
             }
         }
     }
@@ -20,8 +21,11 @@ export class ShoppingCart {
         }
         return count;
     }
-
-    get productIds() {
-        return Object.keys(this.items);
+    get totalPrice() {
+        let sum = 0;
+        this.itemsList.forEach(item => {
+            sum += item.totalPrice;
+        });
+        return sum;
     }
 }
