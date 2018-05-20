@@ -15,7 +15,13 @@ export class ShoppingCartService {
   async getCart(): Promise<Observable<ShoppingCart>> {
     const cartId = await this.getOrCreateCartId();
     return this.db.object<ShoppingCart>('/shopping-carts/' + cartId).valueChanges()
-      .map(x => new ShoppingCart(x.items));
+      .map(x => {
+        if (x) {
+          return new ShoppingCart(x.items);
+        } else {
+          return new ShoppingCart({});
+        }
+      });
   }
 
   async addToCart(product: Product) {
@@ -24,6 +30,11 @@ export class ShoppingCartService {
 
   async removeFromCart(product: Product) {
     this.updateItemQuantity(product, -1);
+  }
+
+  async clearCart() {
+    const cartId = await this.getOrCreateCartId();
+    this.db.object('/shopping-carts/' + cartId + '/items').remove();
   }
 
   private create() {
@@ -57,7 +68,12 @@ export class ShoppingCartService {
         return { exists: exists, ...action.payload.val() };
       })
       .subscribe(item => {
-        item$.update({ product: product, quantity: (item.quantity || 0) + change });
+        const quantity = (item.quantity || 0) + change;
+        if (quantity === 0) {
+          item$.remove();
+        } else {
+          item$.update({ product: product, quantity: quantity });
+        }
       });
   }
 
