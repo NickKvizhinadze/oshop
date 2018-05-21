@@ -4,6 +4,7 @@ import 'rxjs/add/operator/take';
 
 import { CategoryService } from '../../category.service';
 import { ProductService } from '../../product.service';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-form',
@@ -12,7 +13,7 @@ import { ProductService } from '../../product.service';
 })
 export class ProductFormComponent implements OnInit {
   categories$;
-  product = {};
+  product: Product = { key: '', title: '', price: 0, category: '', imageUrl: '' };
   productId;
 
   constructor(
