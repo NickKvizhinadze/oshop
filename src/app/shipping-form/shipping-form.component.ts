@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Order } from '../models/order';
+import { Order } from 'shared/models/order';
 import { Subscription } from 'rxjs/Subscription';
-import { AuthService } from '../auth.service';
+import { AuthService } from 'shared/services/auth.service';
 import { Router } from '@angular/router';
-import { OrderService } from '../order.service';
+import { OrderService } from 'shared/services/order.service';
 
 @Component({
   selector: 'shipping-form',

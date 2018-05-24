@@ -6,8 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 
-import { AppUser } from './models/app-user';
-import { UserService } from './user.service';
+import { AppUser } from 'shared/models/app-user';
+import { UserService } from 'shared/services/user.service';
 
 @Injectable()
 export class AuthService {

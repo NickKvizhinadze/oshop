@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/observable';
 import 'rxjs/add/operator/map';
 
-import { UserService } from './user.service';
-import { AuthService } from './auth.service';
+import { UserService } from 'shared/services/user.service';
+import { AuthService } from 'shared/services/auth.service';
 
 @Injectable()
 export class AdminAuthGuard implements CanActivate {
