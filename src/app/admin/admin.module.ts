@@ -11,9 +11,7 @@ import { AuthGuard } from 'shared/services/auth-guard.service';
 
 @NgModule({
   imports: [
-    CommonModule,
     SharedModule,
-    FormsModule,
     RouterModule.forChild([
       {
         path: 'admin/products/new',
